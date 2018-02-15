@@ -1,0 +1,15 @@
+{
+    "name": "rapidwebltd/php-google-people-api",
+    "description": "PHP Google People API",
+    "type": "library",
+    "require": {
+        "google/apiclient": "^2.2"
+    },
+    "license": "LGPL-3.0-only",
+    "authors": [
+        {
+            "name": "Jordan Hall",
+            "email": "jordan.hall@rapidweb.biz"
+        }
+    ]
+}
