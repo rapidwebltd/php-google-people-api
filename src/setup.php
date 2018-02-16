@@ -27,9 +27,11 @@ echo PHP_EOL;
 $client->setClientId($clientId);
 $client->setClientSecret($clientSecret);
 $client->setRedirectUri('urn:ietf:wg:oauth:2.0:oob');
+$client->setAccessType('offline');
+$client->setApprovalPrompt('force');
 
 $client->addScope('profile');
-$client->addScope('https://www.googleapis.com/auth/contacts.readonly');
+$client->addScope('https://www.googleapis.com/auth/contacts');
 
 $authUrl = $client->createAuthUrl();
 
@@ -42,15 +44,26 @@ echo $authUrl;
 echo PHP_EOL.PHP_EOL;
 
 $authCode = trim(readline('Auth Code: '));
-echo PHP_EOL;
+echo PHP_EOL;PHP_EOL;
 
 $client->authenticate($authCode);
 $accessToken = $client->getAccessToken();
+$refreshToken = $accessToken['refresh_token'];
 
-$client->setAccessToken($accessToken);
+echo 'This account\'s refresh token is: '.$refreshToken;
+echo PHP_EOL.PHP_EOL;
+
+echo 'You should store this refresh token, as it is used to mantain';
+echo PHP_EOL;
+echo 'access to the Google account.';
+echo PHP_EOL.PHP_EOL;
+
+/*
+$client->refreshToken($accessToken);
 
 $peopleService = new Google_Service_People($client);
 
 $connections = $peopleService->people_connections->listPeopleConnections('people/me', array('personFields' => 'names,emailAddresses'));
 
 var_dump($connections);
+*/
