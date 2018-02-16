@@ -24,7 +24,7 @@ $clientId = trim(readline('Google Client ID: '));
 $clientSecret = trim(readline('Google Client Secret: '));
 echo PHP_EOL;
 
-$scopes = ['profile', 'https://www.googleapis.com/auth/contacts'];
+$scopes = ['profile', 'https://www.googleapis.com/auth/contacts', 'https://www.googleapis.com/auth/contacts.readonly'];
 
 $googleOAuth2Handler = new GoogleOAuth2Handler($clientId, $clientSecret, $scopes);
 
