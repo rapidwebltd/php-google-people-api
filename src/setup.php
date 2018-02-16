@@ -1,6 +1,7 @@
 <?php
 
 use RapidWeb\GooglePeopleAPI\GoogleOAuth2Handler;
+use RapidWeb\GooglePeopleAPI\GooglePeople;
 
 if (file_exists(__DIR__.'/../vendor/autoload.php')) {
     require_once __DIR__.'/../vendor/autoload.php';
@@ -49,10 +50,6 @@ echo PHP_EOL;
 echo 'access to the Google account.';
 echo PHP_EOL.PHP_EOL;
 
-/*
-$peopleService = new Google_Service_People($client);
+$people = new GooglePeople($googleOAuth2Handler);
 
-$connections = $peopleService->people_connections->listPeopleConnections('people/me', array('personFields' => 'names,emailAddresses'));
-
-var_dump($connections);
-*/
+$people->all();

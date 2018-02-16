@@ -2,6 +2,8 @@
 
 namespace RapidWeb\GooglePeopleAPI;
 
+use GuzzleHttp\Psr7\Request;
+
 class GoogleOAuth2Handler
 {
     private $clientId;
@@ -48,6 +50,15 @@ class GoogleOAuth2Handler
         $this->client->authenticate($authCode);
         $accessToken = $this->client->getAccessToken();
         return $accessToken['refresh_token'];
+    }
+
+    public function performGetRequest($url)
+    {
+        $httpClient = $this->client->authorize();
+        $request = new Request('GET', $url);
+        $response = $httpClient->send($request);
+        $body = $response->getBody();
+        return $body;
     }
 
 }

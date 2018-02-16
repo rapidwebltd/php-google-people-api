@@ -3,7 +3,8 @@
     "description": "PHP Google People API",
     "type": "library",
     "require": {
-        "google/apiclient": "^2.2"
+        "google/apiclient": "^2.2",
+        "guzzlehttp/guzzle": "^6.3"
     },
     "license": "LGPL-3.0-only",
     "authors": [
