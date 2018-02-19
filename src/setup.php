@@ -52,4 +52,10 @@ echo PHP_EOL.PHP_EOL;
 
 $people = new GooglePeople($googleOAuth2Handler);
 
-$people->all();
+foreach($people->all() as $contact) {
+    echo $contact->resourceName.' - ';
+    if ($contact->names) {
+        echo $contact->names[0]->displayName;
+    }
+    echo PHP_EOL;
+}
