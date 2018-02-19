@@ -69,6 +69,21 @@ class GooglePeople
 
     public function save(Contact $contact)
     {
+        $url = self::PEOPLE_BASE_URL.'people/'.$contact->resourceName.':updateContact?updatePersonFields='.implode(',', self::PERSON_FIELDS);
 
+        $patchObj = new \stdClass();
+        $patchObj->etag = $contact->etag;
+        $patchObj->metadata = $contact->metadata;
+
+        foreach(self::PERSON_FIELDS as $personField) {
+            $patchObj->$personField = $contact->$personField;
+        }
+
+        $response = $this->googleOAuth2Handler->performRequest('PATCH', $url, json_encode($patchObj));
+        $body = (string) $response;
+
+        $responseObj = json_decode($body);
+
+        return $this->convertResponseConnectionToContact($contact);
     }
 }
