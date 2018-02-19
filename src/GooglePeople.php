@@ -36,7 +36,7 @@ class GooglePeople
     {
         $url = self::PEOPLE_BASE_URL.$resourceName.'?personFields='.implode(',', self::PERSON_FIELDS);
 
-        $response = $this->googleOAuth2Handler->performGetRequest($url);
+        $response = $this->googleOAuth2Handler->performRequest('GET', $url);
         $body = (string) $response;
 
         $contact = json_decode($body);
@@ -48,7 +48,7 @@ class GooglePeople
     {
         $url = self::PEOPLE_BASE_URL.'people/me/connections?personFields='.implode(',', self::PERSON_FIELDS);
 
-        $response = $this->googleOAuth2Handler->performGetRequest($url);
+        $response = $this->googleOAuth2Handler->performRequest('GET', $url);
         $body = (string) $response;
 
         $responseObj = json_decode($body);
