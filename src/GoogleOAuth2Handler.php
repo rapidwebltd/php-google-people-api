@@ -55,10 +55,9 @@ class GoogleOAuth2Handler
     public function performRequest($method, $url, $body = null)
     {
         $httpClient = $this->client->authorize();
-        $request = new Request('GET', $url, [], $body);
+        $request = new Request($method, $url, [], $body);
         $response = $httpClient->send($request);
-        $body = $response->getBody();
-        return $body;
+        return $response;
     }
 
 }

@@ -59,3 +59,10 @@ foreach($people->all() as $contact) {
     }
     echo PHP_EOL;
 }
+
+$contact = $people->get('people/c8055020007701654287');
+
+$contact->names[0]->familyName = 'Reardon (The Bear)';
+$contact->save();
+
+var_dump($contact->names[0]);

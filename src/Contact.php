@@ -13,6 +13,12 @@ class Contact
 
     public function save()
     {
-        $this->googlePeople->save($this);
+        $updatedContact = $this->googlePeople->save($this);
+        
+        foreach($updatedContact as $key => $value) {
+            $this->$key = $value;
+        }
+
+        return true;
     }
 }

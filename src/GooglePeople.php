@@ -2,11 +2,14 @@
 
 namespace RapidWeb\GooglePeopleAPI;
 
+use Exception;
+
 class GooglePeople
 {
     private $googleOAuth2Handler;
 
     const PERSON_FIELDS = ['addresses', 'ageRanges', 'biographies', 'birthdays', 'braggingRights', 'coverPhotos', 'emailAddresses', 'events', 'genders', 'imClients', 'interests', 'locales', 'memberships', 'metadata', 'names', 'nicknames', 'occupations', 'organizations', 'phoneNumbers', 'photos', 'relations', 'relationshipInterests', 'relationshipStatuses', 'residences', 'skills', 'taglines', 'urls'];
+    const UPDATE_PERSON_FIELDS = ['addresses', 'biographies', 'birthdays', 'braggingRights', 'emailAddresses', 'events', 'genders', 'imClients', 'interests', 'locales', 'names', 'nicknames', 'occupations', 'organizations', 'phoneNumbers', 'relations', 'residences', 'skills', 'urls'];
     const PEOPLE_BASE_URL = 'https://people.googleapis.com/v1/';
 
     public function __construct(GoogleOAuth2Handler $googleOAuth2Handler)
@@ -32,12 +35,16 @@ class GooglePeople
         return $contact;
     }
 
-    public function getByResourceName($resourceName)
+    public function get($resourceName)
     {
         $url = self::PEOPLE_BASE_URL.$resourceName.'?personFields='.implode(',', self::PERSON_FIELDS);
 
         $response = $this->googleOAuth2Handler->performRequest('GET', $url);
-        $body = (string) $response;
+        $body = (string) $response->getBody();
+
+        if ($response->getStatusCode()!=200) {
+            throw new Exception($body);
+        }
 
         $contact = json_decode($body);
 
@@ -49,7 +56,11 @@ class GooglePeople
         $url = self::PEOPLE_BASE_URL.'people/me/connections?personFields='.implode(',', self::PERSON_FIELDS).'&pageSize=2000';
 
         $response = $this->googleOAuth2Handler->performRequest('GET', $url);
-        $body = (string) $response;
+        $body = (string) $response->getBody();
+
+        if ($response->getStatusCode()!=200) {
+            throw new Exception($body);
+        }
 
         $responseObj = json_decode($body);
 
@@ -64,7 +75,11 @@ class GooglePeople
             $url = self::PEOPLE_BASE_URL.'people/me/connections?personFields='.implode(',', self::PERSON_FIELDS).'&pageSize=2000&pageToken='.$responseObj->nextPageToken;
 
             $response = $this->googleOAuth2Handler->performRequest('GET', $url);
-            $body = (string) $response;
+            $body = (string) $response->getBody();
+
+            if ($response->getStatusCode()!=200) {
+                throw new Exception($body);
+            }
 
             $responseObj = json_decode($body);
 
@@ -83,7 +98,7 @@ class GooglePeople
 
     public function save(Contact $contact)
     {
-        $url = self::PEOPLE_BASE_URL.'people/'.$contact->resourceName.':updateContact?updatePersonFields='.implode(',', self::PERSON_FIELDS);
+        $url = self::PEOPLE_BASE_URL.$contact->resourceName.':updateContact?updatePersonFields='.implode(',', self::UPDATE_PERSON_FIELDS);
 
         $patchObj = new \stdClass();
         $patchObj->etag = $contact->etag;
@@ -93,11 +108,17 @@ class GooglePeople
             $patchObj->$personField = $contact->$personField;
         }
 
-        $response = $this->googleOAuth2Handler->performRequest('PATCH', $url, json_encode($patchObj));
-        $body = (string) $response;
+        $patchBody = json_encode($patchObj);
+
+        $response = $this->googleOAuth2Handler->performRequest('PATCH', $url, $patchBody);
+        $body = (string) $response->getBody();
+
+        if ($response->getStatusCode()!=200) {
+            throw new Exception($body);
+        }
 
         $responseObj = json_decode($body);
 
-        return $this->convertResponseConnectionToContact($contact);
+        return $this->convertResponseConnectionToContact($responseObj);
     }
 }
