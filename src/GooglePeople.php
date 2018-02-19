@@ -3,6 +3,7 @@
 namespace RapidWeb\GooglePeopleAPI;
 
 use Exception;
+use RapidWeb\GoogleOAuth2Handler\GoogleOAuth2Handler;
 
 class GooglePeople
 {
