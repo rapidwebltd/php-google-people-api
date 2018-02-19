@@ -62,7 +62,7 @@ foreach($people->all() as $contact) {
 
 $contact = $people->get('people/c8055020007701654287');
 
-$contact->names[0]->familyName = 'Reardon (The Bear)';
+$contact->names[0]->familyName = 'Reardon (Test)';
 $contact->save();
 
 var_dump($contact->names[0]);
