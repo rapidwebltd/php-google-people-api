@@ -45,7 +45,7 @@ $refreshToken = $googleOAuth2Handler->getRefreshToken($authCode);
 echo 'This account\'s refresh token is: '.$refreshToken;
 echo PHP_EOL.PHP_EOL;
 
-echo 'You should store this refresh token, as it is used to mantain';
+echo 'You should store this refresh token, as it is used to maintain';
 echo PHP_EOL;
 echo 'access to the Google account.';
 echo PHP_EOL.PHP_EOL;
