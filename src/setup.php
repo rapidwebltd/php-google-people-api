@@ -1,7 +1,7 @@
 <?php
 
-use RapidWeb\GooglePeopleAPI\GoogleOAuth2Handler;
 use RapidWeb\GooglePeopleAPI\GooglePeople;
+use RapidWeb\GoogleOAuth2Handler\GoogleOAuth2Handler;
 
 if (file_exists(__DIR__.'/../vendor/autoload.php')) {
     require_once __DIR__.'/../vendor/autoload.php';
@@ -27,7 +27,7 @@ echo PHP_EOL;
 
 $scopes = ['https://www.googleapis.com/auth/userinfo.profile', 'https://www.googleapis.com/auth/contacts', 'https://www.googleapis.com/auth/contacts.readonly'];
 
-$googleOAuth2Handler = new GoogleOAuth2Handler($clientId, $clientSecret, $scopes);
+$googleOAuth2Handler = new GoogleOAuth2Handler()($clientId, $clientSecret, $scopes);
 
 echo 'Now, go to the following URL, sign in to your Google Account,';
 echo PHP_EOL;
