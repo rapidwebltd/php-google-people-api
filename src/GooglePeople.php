@@ -46,7 +46,7 @@ class GooglePeople
 
     public function all()
     {
-        $url = self::PEOPLE_BASE_URL.'people/me/connections?personFields='.implode(',', self::PERSON_FIELDS);
+        $url = self::PEOPLE_BASE_URL.'people/me/connections?personFields='.implode(',', self::PERSON_FIELDS).'&pageSize=2000';
 
         $response = $this->googleOAuth2Handler->performRequest('GET', $url);
         $body = (string) $response;
@@ -57,6 +57,20 @@ class GooglePeople
 
         foreach($responseObj->connections as $connection) {
             $contacts[] = $this->convertResponseConnectionToContact($connection);
+        }
+
+        while(isset($responseObj->nextPageToken)) {
+
+            $url = self::PEOPLE_BASE_URL.'people/me/connections?personFields='.implode(',', self::PERSON_FIELDS).'&pageSize=2000&pageToken='.$responseObj->nextPageToken;
+
+            $response = $this->googleOAuth2Handler->performRequest('GET', $url);
+            $body = (string) $response;
+
+            $responseObj = json_decode($body);
+
+            foreach($responseObj->connections as $connection) {
+                $contacts[] = $this->convertResponseConnectionToContact($connection);
+            }
         }
 
         return $contacts;
