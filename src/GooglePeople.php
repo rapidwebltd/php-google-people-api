@@ -104,7 +104,7 @@ class GooglePeople
         $patchObj->etag = $contact->etag;
         $patchObj->metadata = $contact->metadata;
 
-        foreach(self::PERSON_FIELDS as $personField) {
+        foreach(self::UPDATE_PERSON_FIELDS as $personField) {
             $patchObj->$personField = $contact->$personField;
         }
 
