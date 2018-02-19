@@ -1,6 +1,6 @@
 {
     "name": "rapidwebltd/php-google-people-api",
-    "description": "PHP Google People API",
+    "description": "This package provides a user friendly way of interacting with Google Contacts via the Google People API.",
     "type": "library",
     "require": {
         "google/apiclient": "^2.2",
