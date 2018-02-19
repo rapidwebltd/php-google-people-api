@@ -122,4 +122,18 @@ class GooglePeople
 
         return $this->convertResponseConnectionToContact($responseObj);
     }
+
+    public function delete(Contact $contact)
+    {
+        $url = self::PEOPLE_BASE_URL.$contact->resourceName.':deleteContact';
+
+        $response = $this->googleOAuth2Handler->performRequest('DELETE', $url);
+        $body = (string) $response->getBody();
+
+        if ($response->getStatusCode()!=200) {
+            throw new Exception($body);
+        }
+
+        return true;
+    }
 }

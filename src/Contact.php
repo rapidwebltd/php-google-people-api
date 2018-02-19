@@ -21,4 +21,9 @@ class Contact
 
         return true;
     }
+
+    public function delete()
+    {
+        return $this->googlePeople->delete($this);
+    }
 }
