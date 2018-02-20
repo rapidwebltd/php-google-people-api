@@ -53,30 +53,3 @@ echo PHP_EOL.PHP_EOL;
 
 $people = new GooglePeople($googleOAuth2Handler);
 
-// Retrieval all contacts
-foreach($people->all() as $contact) {
-    echo $contact->resourceName.' - ';
-    if ($contact->names) {
-        echo $contact->names[0]->displayName;
-    }
-    echo PHP_EOL;
-}
-
-// Retrieve single contact
-$contact = $people->get('people/c8055020007701654287');
-
-// Update contact
-$contact->names[0]->familyName = 'Reardon (Test)';
-$contact->save();
-
-// Create new contact
-$contact = new Contact($people);
-$contact->names[0] = new stdClass;
-$contact->names[0]->givenName = 'Testy';
-$contact->names[0]->familyName = 'McTest Test';
-$contact->save();
-$contact->names[0]->familyName = 'McTest Tester';
-$contact->save();
-
-// Delete contact
-$contact->delete();

@@ -18,10 +18,46 @@ If you have never used the Composer dependency manager before, head to the [Comp
 
 ### Retrieve all contacts
 
+```php
+// Retrieval all contacts
+foreach($people->all() as $contact) {
+    echo $contact->resourceName.' - ';
+    if ($contact->names) {
+        echo $contact->names[0]->displayName;
+    }
+    echo PHP_EOL;
+}
+```
+
 ### Retrieve a single contact
+
+```php
+// Retrieve single contact (by resource name)
+$contact = $people->get('people/c8055020007701654287');
+```
 
 ### Create a new contact
 
+```php
+// Create new contact
+$contact = new Contact($people);
+$contact->names[0] = new stdClass;
+$contact->names[0]->givenName = 'Testy';
+$contact->names[0]->familyName = 'McTest Test';
+$contact->save();
+```
+
 ### Update a contact
 
+```php
+// Update contact
+$contact->names[0]->familyName = 'McTest';
+$contact->save();
+```
+
 ### Delete a contact
+
+```php
+// Delete contact
+$contact->delete();
+```
