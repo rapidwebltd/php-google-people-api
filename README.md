@@ -23,6 +23,14 @@ php vendor/rapidwebltd/php-google-oauth-2-handler/src/setup.php
 ```
 
 This will guide you through the process of setting up a project, and logging into to the Google account that you wish to manage contacts for.
+When asked which scopes you require access to, enter the following.
+
+```
+https://www.googleapis.com/auth/userinfo.profile
+https://www.googleapis.com/auth/contacts
+https://www.googleapis.com/auth/contacts.readonly
+```
+
 When complete, you will have to code you need to create a `GoogleOAuth2Handler` object for this Google account.
 
 You can then create a `GooglePeople` object, as follows.
