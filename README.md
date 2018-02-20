@@ -14,7 +14,22 @@ If you have never used the Composer dependency manager before, head to the [Comp
 
 ## Setup
 
-*TODO*
+To use this package, you need to authenticate with Google via OAuth 2. Thankfully, this is made easy by the PHP Google OAuth 2 Handler package.
+
+You can run its guided setup script with the following command.
+
+```
+php vendor/rapidwebltd/php-google-oauth-2-handler/src/setup.php
+```
+
+This will guide you through the process of setting up a project, and logging into to the Google account that you wish to manage contacts for.
+When complete, you will have to code you need to create a `GoogleOAuth2Handler` object for this Google account.
+
+You can then create a `GooglePeople` object, as follows.
+
+```php
+$people = new GooglePeople($googleOAuth2Handler);
+```
 
 ## Usage
 
