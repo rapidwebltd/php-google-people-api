@@ -99,19 +99,33 @@ class GooglePeople
 
     public function save(Contact $contact)
     {
-        $url = self::PEOPLE_BASE_URL.$contact->resourceName.':updateContact?updatePersonFields='.implode(',', self::UPDATE_PERSON_FIELDS);
+        $requestObj = new \stdClass();
 
-        $patchObj = new \stdClass();
-        $patchObj->etag = $contact->etag;
-        $patchObj->metadata = $contact->metadata;
+        if (isset($contact->resourceName)) {
 
-        foreach(self::UPDATE_PERSON_FIELDS as $personField) {
-            $patchObj->$personField = $contact->$personField;
+            // If resource name exists, update the contact.
+            $method = 'PATCH';
+            $url = self::PEOPLE_BASE_URL.$contact->resourceName.':updateContact?updatePersonFields='.implode(',', self::UPDATE_PERSON_FIELDS);
+            $requestObj->etag = $contact->etag;
+            $requestObj->metadata = $contact->metadata;
+
+        } else {
+
+            // If resource name does not exist, create new contact.
+            $method = 'POST';
+            $url = self::PEOPLE_BASE_URL.'people:createContact?parent=people/me';
+
         }
 
-        $patchBody = json_encode($patchObj);
+        foreach(self::UPDATE_PERSON_FIELDS as $personField) {
+            if (isset($contact->$personField)) {
+                $requestObj->$personField = $contact->$personField;
+            }
+        }
 
-        $response = $this->googleOAuth2Handler->performRequest('PATCH', $url, $patchBody);
+        $requestBody = json_encode($requestObj);
+
+        $response = $this->googleOAuth2Handler->performRequest($method, $url, $requestBody);
         $body = (string) $response->getBody();
 
         if ($response->getStatusCode()!=200) {
