@@ -2,6 +2,8 @@
 
 This package provides a user friendly way of interacting with Google Contacts via the Google People API.
 
+<img src="assets/images/php-google-people-api.png" />
+
 ## Installation
 
 PHP Google People API can be easily installed using Composer. Just run the following command from the root of your project.
