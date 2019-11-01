@@ -113,7 +113,7 @@ class GooglePeople
 
             // If resource name does not exist, create new contact.
             $method = 'POST';
-            $url = self::PEOPLE_BASE_URL.'people:createContact?parent=people/me';
+            $url = self::PEOPLE_BASE_URL.'people:createContact';
 
         }
 
