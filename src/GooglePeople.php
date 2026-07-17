@@ -65,6 +65,10 @@ class GooglePeople
 
         $responseObj = json_decode($body);
 
+        if (empty($responseObj->connections) || ! is_array($responseObj->connections)) {
+            return [];
+        }
+
         $contacts = [];
 
         foreach($responseObj->connections as $connection) {
