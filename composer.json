@@ -3,7 +3,11 @@
     "description": "This package provides a user friendly way of interacting with Google Contacts via the Google People API.",
     "type": "library",
     "require": {
-        "rapidwebltd/php-google-oauth-2-handler": "^1.2.1"
+        "php": "^8.1",
+        "rapidwebltd/php-google-oauth-2-handler": "^2.0"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^9.6"
     },
     "license": "LGPL-3.0-only",
     "authors": [
