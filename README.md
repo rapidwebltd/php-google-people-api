@@ -2,6 +2,8 @@
 
 This package provides a user friendly way of interacting with Google Contacts via the Google People API.
 
+Version 2 requires PHP 8.1 or newer.
+
 <img src="assets/images/php-google-people-api.png" />
 
 ## Installation
@@ -33,7 +35,15 @@ https://www.googleapis.com/auth/contacts
 https://www.googleapis.com/auth/contacts.readonly
 ```
 
-When complete, you will have to code you need to create a `GoogleOAuth2Handler` object for this Google account.
+When complete, you will have the code needed to create a `GoogleOAuth2Handler` object for this Google account.
+
+Import the package classes before using the examples below.
+
+```php
+use RapidWeb\GoogleOAuth2Handler\GoogleOAuth2Handler;
+use RapidWeb\GooglePeopleAPI\Contact;
+use RapidWeb\GooglePeopleAPI\GooglePeople;
+```
 
 You can then create a `GooglePeople` object, as follows.
 
